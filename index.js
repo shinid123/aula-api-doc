@@ -9,6 +9,10 @@ const specs = swaggerJsdoc(swaggerOptions);
 
 app.use(express.json());
 
+let alunos = [
+  { id: 1, ra: 123, nome: 'Jonas Carlos João da Silva Silva' }
+];
+
 /**
  * @swagger
  * components:
@@ -66,10 +70,15 @@ app.get('/aluno', (req, res) => {
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/Aluno'
+ *             type: object
+ *             properties:
+ *              nome:
+ *                  type: string
+ *              ra:
+ *                  type: integer
  *     responses:
  *       201:
- *         description: Aluno cadastrado com sucesso
+ *         description: Cadastro de alunos
  *         content:
  *           application/json:
  *             schema:
@@ -85,7 +94,7 @@ app.post('/aluno', (req, res) => {
 
 /**
  * @swagger
- * /aluno:
+ * /aluno/{id}:
  *   put:
  *     summary: Atualização
  *     tags: [Alunos]
@@ -100,9 +109,14 @@ app.post('/aluno', (req, res) => {
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/Aluno'
+ *             type: object
+ *             properties:
+ *              nome:
+ *                  type: string
+ *              ra:
+ *                  type: integer 
  *     responses:
- *       201:
+ *       200:
  *         description: Aluno atualizado com sucesso
  *         content:
  *           application/json:
@@ -125,10 +139,6 @@ app.put('/aluno/:id', (req, res) => {
 });
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
-
-let alunos = [
-  { id: 1, ra: 123, nome: 'Jonas Carlos João da Silva Silva' }
-];
 
 app.listen(port, () => {
   console.log(`Servidor de API rodando`);
